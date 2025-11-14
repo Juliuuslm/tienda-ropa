@@ -155,7 +155,8 @@ export const CartPage: React.FC = () => {
                           type="number"
                           value={item.quantity}
                           onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
-                          className="w-10 text-center border-0 py-1 text-sm font-semibold text-neutral-900 bg-white"
+                          className="w-12 px-1 text-center border-0 py-1 text-sm font-bold text-neutral-900 bg-white appearance-none"
+                          style={{ colorScheme: 'light' }}
                           min="1"
                         />
                         <button
@@ -237,7 +238,8 @@ export const CartPage: React.FC = () => {
                             type="number"
                             value={item.quantity}
                             onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
-                            className="w-10 text-center border-0 py-1 text-sm font-semibold text-neutral-900 bg-white"
+                            className="w-12 px-1 text-center border-0 py-1 text-sm font-bold text-neutral-900 bg-white appearance-none"
+                            style={{ colorScheme: 'light' }}
                             min="1"
                           />
                           <button
