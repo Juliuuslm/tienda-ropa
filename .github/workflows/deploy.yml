@@ -45,6 +45,10 @@ jobs:
       - name: Build project
         run: pnpm build
 
+      - name: Clean Windows metadata files
+        run: find dist/ -name '*:Zone.Identifier' -delete || true
+        shell: bash
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         if: success()
