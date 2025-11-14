@@ -103,7 +103,7 @@ export const CartPage: React.FC = () => {
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
             {/* Desktop Table Header */}
-            <div className="hidden lg:grid grid-cols-7 gap-4 bg-neutral-50 p-4 font-semibold text-sm border-b border-neutral-200">
+            <div className="hidden lg:grid grid-cols-7 gap-6 bg-neutral-50 px-6 py-4 font-semibold text-sm border-b border-neutral-200">
               <div className="">Imagen</div>
               <div className="col-span-2">Producto</div>
               <div className="">Cantidad</div>
@@ -117,10 +117,10 @@ export const CartPage: React.FC = () => {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="p-4"
+                  className="px-6 py-5"
                 >
                   {/* Desktop View */}
-                  <div className="hidden lg:grid grid-cols-7 gap-4 items-center">
+                  <div className="hidden lg:grid grid-cols-7 gap-6 items-center">
                     {/* Imagen */}
                     <div>
                       <img
@@ -205,31 +205,31 @@ export const CartPage: React.FC = () => {
                   </div>
 
                   {/* Mobile View */}
-                  <div className="lg:hidden">
-                    <div className="flex gap-4 mb-4">
+                  <div className="lg:hidden space-y-4">
+                    <div className="flex gap-5">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-24 h-24 object-cover rounded flex-shrink-0"
+                        className="w-28 h-28 object-cover rounded flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0">
                         <a href={`/products/${item.slug}`} className="font-semibold text-primary-600 hover:underline block text-sm">
                           {item.name}
                         </a>
-                        <div className="text-xs text-neutral-600 mt-2 space-y-1">
+                        <div className="text-xs text-neutral-600 mt-3 space-y-2">
                           {item.color && <div>Color: {item.color}</div>}
                           {item.size && <div>Talla: {item.size}</div>}
                         </div>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="grid grid-cols-2 gap-5 bg-neutral-50 p-4 rounded">
                       <div>
-                        <label className="block text-xs font-semibold mb-1 text-neutral-600">Cantidad</label>
+                        <label className="block text-xs font-semibold mb-2 text-neutral-600">Cantidad</label>
                         <div className="flex items-center gap-2 border border-neutral-300 rounded w-fit">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="px-2 py-1 hover:bg-neutral-100 text-sm"
+                            className="px-3 py-2 hover:bg-neutral-100 text-sm"
                             aria-label="Disminuir cantidad"
                           >
                             −
@@ -238,13 +238,13 @@ export const CartPage: React.FC = () => {
                             type="number"
                             value={item.quantity}
                             onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
-                            className="w-12 px-1 text-center border-0 py-1 text-sm font-bold text-neutral-900 bg-white appearance-none"
+                            className="w-12 px-1 text-center border-0 py-2 text-sm font-bold text-neutral-900 bg-white appearance-none"
                             style={{ colorScheme: 'light' }}
                             min="1"
                           />
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="px-2 py-1 hover:bg-neutral-100 text-sm"
+                            className="px-3 py-2 hover:bg-neutral-100 text-sm"
                             aria-label="Aumentar cantidad"
                           >
                             +
@@ -253,26 +253,26 @@ export const CartPage: React.FC = () => {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold mb-1 text-neutral-600">Precio</label>
-                        <div className="text-sm font-semibold">${item.price.toFixed(2)}</div>
+                        <label className="block text-xs font-semibold mb-2 text-neutral-600">Precio</label>
+                        <div className="text-sm font-semibold text-neutral-900">${item.price.toFixed(2)}</div>
                       </div>
                     </div>
 
-                    <div className="flex gap-4 items-center justify-between bg-neutral-50 p-3 rounded mb-4">
+                    <div className="flex gap-5 items-center justify-between bg-primary-50 p-4 rounded border border-primary-200">
                       <div>
-                        <span className="text-xs text-neutral-600">Subtotal:</span>
-                        <div className="font-bold text-primary-600 text-sm">${(item.price * item.quantity).toFixed(2)}</div>
+                        <span className="text-xs font-semibold text-neutral-600">Subtotal:</span>
+                        <div className="font-bold text-primary-600 text-base">${(item.price * item.quantity).toFixed(2)}</div>
                       </div>
                       <button
                         onClick={() => removeItem(item.id)}
-                        className="px-3 py-2 bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition-colors rounded border border-red-200 inline-flex items-center gap-1.5 text-sm"
+                        className="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition-colors rounded border border-red-200 inline-flex items-center gap-2 text-sm whitespace-nowrap"
                         title="Remover del carrito"
                         aria-label={`Remover ${item.name} del carrito`}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="14"
-                          height="14"
+                          width="16"
+                          height="16"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
