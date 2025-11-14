@@ -1,0 +1,31 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SEO from '@/components/common/SEO.astro';
+import { WishlistPage } from '@/components/wishlist/WishlistPage';
+---
+
+<BaseLayout>
+  <SEO
+    title="Mis Favoritos | Tienda de Ropa"
+    description="Ver tu lista de productos favoritos y guardados para más tarde."
+    type="product"
+  />
+
+  <main class="flex-1">
+    <!-- Breadcrumb -->
+    <nav class="bg-neutral-50 py-4">
+      <div class="container flex gap-2 text-sm">
+        <a href="/" class="text-primary-600 hover:underline">Home</a>
+        <span>/</span>
+        <span class="text-neutral-600">Wishlist</span>
+      </div>
+    </nav>
+
+    <!-- Wishlist Section -->
+    <section class="py-12">
+      <div class="container">
+        <WishlistPage client:visible />
+      </div>
+    </section>
+  </main>
+</BaseLayout>
