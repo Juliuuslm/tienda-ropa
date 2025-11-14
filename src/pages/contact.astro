@@ -1,0 +1,98 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/common/Button.astro';
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Ponte en contacto con nosotros"
+>
+  <!-- Page Header -->
+  <section class="bg-neutral-100 py-12">
+    <div class="container">
+      <h1 class="text-4xl font-bold">Contacto</h1>
+      <p class="text-neutral-600">Nos encantaría saber de ti</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="py-16">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
+        <!-- Contact Info -->
+        {
+          [
+            {
+              icon: '📍',
+              title: 'Dirección',
+              content: 'Calle Principal 123, Madrid, España',
+            },
+            {
+              icon: '📧',
+              title: 'Email',
+              content: 'info@tiendaderopa.com',
+            },
+            {
+              icon: '📱',
+              title: 'Teléfono',
+              content: '+34 123 456 789',
+            },
+          ].map((item) => (
+            <div class="text-center">
+              <div class="text-4xl mb-4">{item.icon}</div>
+              <h3 class="text-xl font-bold mb-2">{item.title}</h3>
+              <p class="text-neutral-600">{item.content}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Contact Form -->
+      <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-8">
+        <h2 class="text-2xl font-bold mb-6">Envíanos un Mensaje</h2>
+        <form class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-semibold mb-2">Nombre</label>
+              <input
+                type="text"
+                class="w-full border border-neutral-300 rounded px-4 py-2"
+                placeholder="Tu nombre"
+              />
+            </div>
+            <div>
+              <label class="block font-semibold mb-2">Email</label>
+              <input
+                type="email"
+                class="w-full border border-neutral-300 rounded px-4 py-2"
+                placeholder="tu@email.com"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2">Asunto</label>
+            <input
+              type="text"
+              class="w-full border border-neutral-300 rounded px-4 py-2"
+              placeholder="Asunto del mensaje"
+            />
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2">Mensaje</label>
+            <textarea
+              rows={6}
+              class="w-full border border-neutral-300 rounded px-4 py-2"
+              placeholder="Tu mensaje aquí..."
+            ></textarea>
+          </div>
+
+          <Button variant="primary" class="w-full text-center">
+            Enviar Mensaje
+          </Button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

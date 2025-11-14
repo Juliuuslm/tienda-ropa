@@ -1,0 +1,147 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/common/Button.astro';
+---
+
+<BaseLayout
+  title="Checkout"
+  description="Completa tu compra"
+>
+  <!-- Page Header -->
+  <section class="bg-neutral-100 py-12">
+    <div class="container">
+      <h1 class="text-4xl font-bold">Checkout</h1>
+    </div>
+  </section>
+
+  <!-- Checkout Content -->
+  <section class="py-12">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <!-- Checkout Form -->
+        <div class="lg:col-span-2">
+          <!-- Progress Steps -->
+          <div class="flex gap-8 mb-12">
+            {
+              [
+                { num: 1, label: 'Facturación' },
+                { num: 2, label: 'Envío' },
+                { num: 3, label: 'Pago' },
+              ].map((step) => (
+                <div class="flex flex-col items-center">
+                  <div class={`w-10 h-10 rounded-full flex items-center justify-center font-bold mb-2 ${step.num === 1 ? 'bg-primary-600 text-white' : 'bg-neutral-200 text-neutral-600'}`}>
+                    {step.num}
+                  </div>
+                  <span class="text-sm">{step.label}</span>
+                </div>
+              ))
+            }
+          </div>
+
+          <!-- Billing Form -->
+          <form class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <h3 class="text-xl font-bold mb-6">Dirección de Facturación</h3>
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="block font-semibold mb-2">Nombre</label>
+                <input
+                  type="text"
+                  class="w-full border border-neutral-300 rounded px-4 py-2"
+                  placeholder="Juan"
+                />
+              </div>
+              <div>
+                <label class="block font-semibold mb-2">Apellido</label>
+                <input
+                  type="text"
+                  class="w-full border border-neutral-300 rounded px-4 py-2"
+                  placeholder="Pérez"
+                />
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="block font-semibold mb-2">Email</label>
+              <input
+                type="email"
+                class="w-full border border-neutral-300 rounded px-4 py-2"
+                placeholder="juan@ejemplo.com"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label class="block font-semibold mb-2">Dirección</label>
+              <input
+                type="text"
+                class="w-full border border-neutral-300 rounded px-4 py-2"
+                placeholder="Calle Principal 123"
+              />
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="block font-semibold mb-2">Ciudad</label>
+                <input
+                  type="text"
+                  class="w-full border border-neutral-300 rounded px-4 py-2"
+                  placeholder="Ciudad"
+                />
+              </div>
+              <div>
+                <label class="block font-semibold mb-2">Código Postal</label>
+                <input
+                  type="text"
+                  class="w-full border border-neutral-300 rounded px-4 py-2"
+                  placeholder="12345"
+                />
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label class="block font-semibold mb-2">Teléfono</label>
+              <input
+                type="tel"
+                class="w-full border border-neutral-300 rounded px-4 py-2"
+                placeholder="+34 123 456 789"
+              />
+            </div>
+
+            <Button variant="primary" class="w-full text-center">
+              Continuar al Envío
+            </Button>
+          </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="bg-neutral-50 rounded-lg p-6 h-fit">
+          <h3 class="text-xl font-bold mb-6">Resumen de Orden</h3>
+
+          <div class="space-y-4 mb-6 pb-6 border-b">
+            <p class="text-neutral-600">Tu carrito está vacío</p>
+          </div>
+
+          <div class="space-y-4 mb-6 pb-6 border-b">
+            <div class="flex justify-between text-neutral-700">
+              <span>Subtotal:</span>
+              <span>$0.00</span>
+            </div>
+            <div class="flex justify-between text-neutral-700">
+              <span>Envío:</span>
+              <span>$0.00</span>
+            </div>
+            <div class="flex justify-between text-neutral-700">
+              <span>Impuestos:</span>
+              <span>$0.00</span>
+            </div>
+          </div>
+
+          <div class="flex justify-between text-lg font-bold">
+            <span>Total:</span>
+            <span class="text-primary-600">$0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

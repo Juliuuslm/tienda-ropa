@@ -1,0 +1,74 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/common/Button.astro';
+---
+
+<BaseLayout
+  title="Carrito de Compras"
+  description="Revisa tu carrito de compras"
+>
+  <!-- Page Header -->
+  <section class="bg-neutral-100 py-12">
+    <div class="container">
+      <h1 class="text-4xl font-bold">Carrito de Compras</h1>
+    </div>
+  </section>
+
+  <!-- Cart Content -->
+  <section class="py-12">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <!-- Cart Items -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <p class="text-neutral-600 text-center py-12">
+              Para ver tu carrito, primero debes agregar productos desde la tienda.
+            </p>
+          </div>
+
+          <div class="flex gap-4">
+            <Button href="/shop" variant="primary">
+              Continuar Comprando
+            </Button>
+            <Button href="/" variant="outline">
+              Volver al Inicio
+            </Button>
+          </div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="bg-neutral-50 rounded-lg p-6 h-fit">
+          <h3 class="text-xl font-bold mb-6">Resumen de Orden</h3>
+
+          <div class="space-y-4 mb-6 pb-6 border-b">
+            <div class="flex justify-between text-neutral-700">
+              <span>Subtotal:</span>
+              <span>$0.00</span>
+            </div>
+            <div class="flex justify-between text-neutral-700">
+              <span>Envío:</span>
+              <span class="text-green-600">Gratis</span>
+            </div>
+            <div class="flex justify-between text-neutral-700">
+              <span>Impuestos:</span>
+              <span>$0.00</span>
+            </div>
+          </div>
+
+          <div class="flex justify-between text-lg font-bold mb-6">
+            <span>Total:</span>
+            <span class="text-primary-600">$0.00</span>
+          </div>
+
+          <Button href="/checkout" variant="primary" class="w-full text-center">
+            Proceder al Checkout
+          </Button>
+
+          <p class="text-xs text-neutral-600 text-center mt-4">
+            Se aplicarán impuestos y gastos de envío en el checkout.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
