@@ -25,7 +25,7 @@ export const MiniCart: React.FC = () => {
       </button>
 
       {/* Dropdown */}
-      <div className="absolute right-0 top-full hidden group-hover:block bg-white border border-neutral-300 rounded shadow-lg w-80 p-4 z-50">
+      <div className="absolute right-0 top-full hidden group-hover:block bg-white border border-neutral-300 rounded shadow-lg w-full max-w-sm md:w-80 p-4 z-50">
         {isLoading ? (
           <p className="text-neutral-600 text-center py-4">Cargando...</p>
         ) : items.length === 0 ? (

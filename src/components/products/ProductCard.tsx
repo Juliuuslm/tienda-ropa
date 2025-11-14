@@ -85,7 +85,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Content Container */}
       <div className="p-4 flex-1 flex flex-col">
         {/* Name */}
-        <h3 className="text-lg font-semibold text-neutral-900 mb-2 line-clamp-2 h-14">
+        <h3 className="text-base md:text-lg font-semibold text-neutral-900 mb-2 line-clamp-2 h-14">
           {name}
         </h3>
 
@@ -110,7 +110,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Price */}
         <div className="flex items-center gap-2 mb-4">
-          <span className="text-2xl font-bold text-primary-600">
+          <span className="text-xl md:text-2xl font-bold text-primary-600">
             ${displayPrice.toFixed(2)}
           </span>
           {salePrice && (

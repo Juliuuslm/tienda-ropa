@@ -69,9 +69,9 @@ export const ComparePage: React.FC = () => {
           <circle cx="9" cy="9" r="4"></circle>
           <circle cx="19" cy="9" r="4"></circle>
         </svg>
-        <h2 className="text-2xl font-bold text-neutral-900 mb-2">
+        <h1 className="text-xl md:text-2xl font-bold text-neutral-900 mb-2">
           No hay productos para comparar
-        </h2>
+        </h1>
         <p className="text-neutral-600 mb-6">Agrega hasta 4 productos para compararlos</p>
         <a
           href="/shop"
@@ -96,7 +96,7 @@ export const ComparePage: React.FC = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Comparar Productos ({items.length}/4)</h2>
+        <h1 className="text-xl md:text-2xl font-bold">Comparar Productos ({items.length}/4)</h1>
         {items.length > 0 && (
           <button
             onClick={clearCompare}

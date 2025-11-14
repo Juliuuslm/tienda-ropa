@@ -78,7 +78,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
 
           {/* Miniaturas */}
           {product.images && product.images.length > 1 && (
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <button
                 onClick={() => handleImageChange(product.image)}
                 className={`relative rounded overflow-hidden cursor-pointer transition-all ${
@@ -105,7 +105,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         {/* Información del producto */}
         <div>
           {/* Título */}
-          <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">{product.name}</h1>
 
           {/* Rating */}
           {product.rating && (
@@ -129,7 +129,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           {/* Precio */}
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-3xl font-bold text-primary-600">${displayPrice.toFixed(2)}</span>
+              <span className="text-2xl md:text-3xl font-bold text-primary-600">${displayPrice.toFixed(2)}</span>
               {product.salePrice && (
                 <span className="text-lg text-neutral-500 line-through">${product.price.toFixed(2)}</span>
               )}

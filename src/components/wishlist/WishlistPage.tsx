@@ -62,7 +62,7 @@ export const WishlistPage: React.FC = () => {
         >
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
         </svg>
-        <h2 className="text-2xl font-bold text-neutral-900 mb-2">Tu lista de favoritos está vacía</h2>
+        <h1 className="text-xl md:text-2xl font-bold text-neutral-900 mb-2">Tu lista de favoritos está vacía</h1>
         <p className="text-neutral-600 mb-6">Comienza a agregar productos que te gusten</p>
         <a
           href="/shop"
@@ -77,7 +77,7 @@ export const WishlistPage: React.FC = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Mis Favoritos ({items.length})</h2>
+        <h1 className="text-xl md:text-2xl font-bold">Mis Favoritos ({items.length})</h1>
         {items.length > 0 && (
           <button
             onClick={clearWishlist}

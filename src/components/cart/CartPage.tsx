@@ -75,7 +75,7 @@ export const CartPage: React.FC = () => {
           <circle cx="20" cy="21" r="1"></circle>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
         </svg>
-        <h2 className="text-2xl font-bold text-neutral-900 mb-2">Tu carrito está vacío</h2>
+        <h1 className="text-xl md:text-2xl font-bold text-neutral-900 mb-2">Tu carrito está vacío</h1>
         <p className="text-neutral-600 mb-6">Agrega productos para comenzar</p>
         <a
           href="/shop"
@@ -89,7 +89,7 @@ export const CartPage: React.FC = () => {
 
   return (
     <div className="py-8">
-      <h1 className="text-3xl font-bold mb-8">Tu Carrito ({items.length} items)</h1>
+      <h1 className="text-2xl md:text-3xl font-bold mb-8">Tu Carrito ({items.length} items)</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Items del carrito */}
