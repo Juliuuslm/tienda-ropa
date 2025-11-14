@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ProductGrid from '@/components/products/ProductGrid.astro';
+import { ShopPage } from '@/components/shop/ShopPage';
 import products from '@/data/products.json';
 ---
 
@@ -19,35 +19,7 @@ import products from '@/data/products.json';
   <!-- Shop Section -->
   <section class="py-16">
     <div class="container">
-      <!-- Toolbar -->
-      <div class="flex justify-between items-center mb-8">
-        <p class="text-neutral-600">
-          Mostrando {products.length} productos
-        </p>
-        <select class="border border-neutral-300 rounded px-4 py-2">
-          <option>Ordenar por: Más nuevo</option>
-          <option>Ordenar por: Precio menor</option>
-          <option>Ordenar por: Precio mayor</option>
-          <option>Ordenar por: Más popular</option>
-        </select>
-      </div>
-
-      <!-- Product Grid -->
-      <ProductGrid products={products} columns={3} />
-
-      <!-- Pagination -->
-      <div class="mt-12 flex justify-center gap-2">
-        <button class="px-4 py-2 border border-neutral-300 rounded hover:bg-neutral-100">
-          ← Anterior
-        </button>
-        <button class="px-4 py-2 bg-primary-600 text-white rounded">1</button>
-        <button class="px-4 py-2 border border-neutral-300 rounded hover:bg-neutral-100">
-          2
-        </button>
-        <button class="px-4 py-2 border border-neutral-300 rounded hover:bg-neutral-100">
-          Siguiente →
-        </button>
-      </div>
+      <ShopPage client:load products={products} itemsPerPage={12} />
     </div>
   </section>
 </BaseLayout>
