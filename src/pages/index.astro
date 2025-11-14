@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import FeaturedDeals from '@/components/products/FeaturedDeals.astro';
+import Testimonials from '@/components/common/Testimonials.astro';
+import { Newsletter } from '@/components/common/Newsletter';
 ---
 
 <BaseLayout
@@ -26,12 +29,12 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- Status Section -->
-  <section class="py-12">
-    <div class="container text-center">
-      <p class="text-lg font-semibold text-primary-600">
-        ✓ Sitio en construcción - Astro + React + Tailwind CSS
-      </p>
-    </div>
-  </section>
+  <!-- Featured Deals -->
+  <FeaturedDeals />
+
+  <!-- Testimonials -->
+  <Testimonials />
+
+  <!-- Newsletter -->
+  <Newsletter client:idle />
 </BaseLayout>
