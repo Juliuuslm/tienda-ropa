@@ -2,6 +2,7 @@
 import SEO from '@/components/common/SEO.astro';
 import AppProviders from '@/components/layout/AppProviders.astro';
 import { NavLinks } from '@/components/layout/NavLinks';
+import { MiniCart } from '@/components/cart/MiniCart';
 import '@/styles/global.css';
 
 export interface Props {
@@ -33,12 +34,13 @@ const { title, description, image, type = 'website' } = Astro.props;
             <a href="/" class="text-2xl font-bold text-primary-600">
               Tienda de Ropa
             </a>
-            <nav class="hidden md:flex gap-8 items-center">
+            <nav class="hidden md:flex gap-6 items-center">
               <a href="/shop" class="hover:text-primary-600">Shop</a>
               <a href="/blog" class="hover:text-primary-600">Blog</a>
               <a href="/about" class="hover:text-primary-600">About</a>
               <a href="/contact" class="hover:text-primary-600">Contact</a>
-              <div class="border-l border-neutral-200 pl-8">
+              <div class="border-l border-neutral-200 pl-6 flex gap-4">
+                <MiniCart client:load />
                 <NavLinks client:visible />
               </div>
             </nav>

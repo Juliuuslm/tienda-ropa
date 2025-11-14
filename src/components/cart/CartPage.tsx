@@ -1,0 +1,271 @@
+import React, { useEffect, useState } from 'react';
+
+interface CartItem {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+  color?: string;
+  size?: string;
+}
+
+export const CartPage: React.FC = () => {
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Cargar carrito desde localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('cart');
+      if (saved) {
+        setItems(JSON.parse(saved));
+      }
+    } catch (error) {
+      console.error('Error loading cart:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const updateQuantity = (id: string, quantity: number) => {
+    const maxQty = 999;
+    if (quantity < 1) {
+      removeItem(id);
+      return;
+    }
+    if (quantity > maxQty) quantity = maxQty;
+
+    const updatedItems = items.map((item) => (item.id === id ? { ...item, quantity } : item));
+    setItems(updatedItems);
+    localStorage.setItem('cart', JSON.stringify(updatedItems));
+  };
+
+  const removeItem = (id: string) => {
+    const updatedItems = items.filter((item) => item.id !== id);
+    setItems(updatedItems);
+    localStorage.setItem('cart', JSON.stringify(updatedItems));
+  };
+
+  const clearCart = () => {
+    setItems([]);
+    localStorage.setItem('cart', JSON.stringify([]));
+  };
+
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const tax = subtotal * 0.1; // 10% tax
+  const shipping = subtotal > 0 && subtotal < 100 ? 10 : 0; // Free shipping over $100
+  const total = subtotal + tax + shipping;
+
+  if (isLoading) {
+    return <div className="text-center py-12">Cargando carrito...</div>;
+  }
+
+  if (items.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="64"
+          height="64"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="mx-auto mb-4 text-neutral-400"
+        >
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <h2 className="text-2xl font-bold text-neutral-900 mb-2">Tu carrito está vacío</h2>
+        <p className="text-neutral-600 mb-6">Agrega productos para comenzar</p>
+        <a
+          href="/shop"
+          className="inline-block bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors"
+        >
+          Continuar comprando
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <div className="py-8">
+      <h1 className="text-3xl font-bold mb-8">Tu Carrito ({items.length} items)</h1>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Items del carrito */}
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            {/* Encabezado de tabla */}
+            <div className="hidden md:grid grid-cols-12 gap-4 bg-neutral-50 p-4 font-semibold text-sm">
+              <div className="col-span-1">Imagen</div>
+              <div className="col-span-4">Producto</div>
+              <div className="col-span-2">Cantidad</div>
+              <div className="col-span-2">Precio</div>
+              <div className="col-span-2">Subtotal</div>
+              <div className="col-span-1">Acción</div>
+            </div>
+
+            {/* Items */}
+            <div className="divide-y">
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  className="p-4 grid grid-cols-1 md:grid-cols-12 md:gap-4 md:items-center"
+                >
+                  {/* Imagen */}
+                  <div className="md:col-span-1 mb-4 md:mb-0">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full md:w-20 h-20 object-cover rounded"
+                    />
+                  </div>
+
+                  {/* Nombre y atributos */}
+                  <div className="md:col-span-4 mb-4 md:mb-0">
+                    <a href={`/products/${item.slug}`} className="font-semibold text-primary-600 hover:underline">
+                      {item.name}
+                    </a>
+                    <div className="text-sm text-neutral-600 mt-1">
+                      {item.color && <div>Color: {item.color}</div>}
+                      {item.size && <div>Talla: {item.size}</div>}
+                    </div>
+                  </div>
+
+                  {/* Cantidad */}
+                  <div className="md:col-span-2 mb-4 md:mb-0">
+                    <label className="block text-sm font-semibold md:hidden mb-2">Cantidad</label>
+                    <div className="flex items-center gap-2 border border-neutral-300 rounded w-fit">
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        className="px-3 py-1 hover:bg-neutral-100"
+                        aria-label="Disminuir cantidad"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        value={item.quantity}
+                        onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
+                        className="w-12 text-center border-0 py-1"
+                        min="1"
+                      />
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        className="px-3 py-1 hover:bg-neutral-100"
+                        aria-label="Aumentar cantidad"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Precio unitario */}
+                  <div className="md:col-span-2 mb-4 md:mb-0">
+                    <label className="block text-sm font-semibold md:hidden mb-2">Precio</label>
+                    <div className="font-semibold">${item.price.toFixed(2)}</div>
+                  </div>
+
+                  {/* Subtotal */}
+                  <div className="md:col-span-2 mb-4 md:mb-0">
+                    <label className="block text-sm font-semibold md:hidden mb-2">Subtotal</label>
+                    <div className="font-bold text-primary-600">${(item.price * item.quantity).toFixed(2)}</div>
+                  </div>
+
+                  {/* Botón remover */}
+                  <div className="md:col-span-1">
+                    <button
+                      onClick={() => removeItem(item.id)}
+                      className="w-full md:w-auto text-red-600 hover:text-red-700 font-semibold transition-colors"
+                      title="Remover del carrito"
+                    >
+                      Remover
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Botones de acción */}
+          <div className="mt-6 flex gap-4">
+            <a
+              href="/shop"
+              className="flex-1 border border-primary-600 text-primary-600 py-3 rounded-lg hover:bg-primary-50 transition-colors font-semibold text-center"
+            >
+              Continuar comprando
+            </a>
+            <button
+              onClick={clearCart}
+              className="flex-1 border border-red-600 text-red-600 py-3 rounded-lg hover:bg-red-50 transition-colors font-semibold"
+            >
+              Limpiar carrito
+            </button>
+          </div>
+        </div>
+
+        {/* Resumen de pedido */}
+        <div className="lg:col-span-1">
+          <div className="bg-white rounded-lg shadow-sm p-6 sticky top-24">
+            <h2 className="text-xl font-bold mb-6">Resumen</h2>
+
+            <div className="space-y-4 mb-6">
+              <div className="flex justify-between text-sm">
+                <span className="text-neutral-600">Subtotal</span>
+                <span className="font-semibold">${subtotal.toFixed(2)}</span>
+              </div>
+
+              {shipping > 0 && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-neutral-600">Envío</span>
+                  <span className="font-semibold">${shipping.toFixed(2)}</span>
+                </div>
+              )}
+
+              {shipping === 0 && subtotal > 0 && (
+                <div className="flex justify-between text-sm bg-green-50 p-2 rounded border border-green-200">
+                  <span className="text-green-700">🎉 Envío gratis</span>
+                </div>
+              )}
+
+              {shipping > 0 && subtotal < 100 && (
+                <div className="flex justify-between text-sm bg-blue-50 p-2 rounded border border-blue-200">
+                  <span className="text-blue-700 text-xs">Envío gratis a partir de $100</span>
+                </div>
+              )}
+
+              <div className="flex justify-between text-sm">
+                <span className="text-neutral-600">Impuestos</span>
+                <span className="font-semibold">${tax.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <div className="border-t pt-4 mb-6">
+              <div className="flex justify-between text-lg">
+                <span className="font-bold">Total</span>
+                <span className="font-bold text-primary-600">${total.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <a
+              href="/checkout"
+              className="w-full bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors font-semibold text-center block"
+            >
+              Proceder al Checkout
+            </a>
+
+            <p className="text-center text-xs text-neutral-600 mt-4">
+              Se aplicarán impuestos según tu ubicación
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

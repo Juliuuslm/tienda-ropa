@@ -1,5 +1,13 @@
-import React from 'react';
-import { useWishlist } from '@/context/WishlistContext';
+import React, { useState, useEffect } from 'react';
+
+interface WishlistItem {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  image: string;
+  addedAt: string;
+}
 
 interface WishlistButtonProps {
   id: string;
@@ -20,18 +28,37 @@ export const WishlistButton: React.FC<WishlistButtonProps> = ({
   variant = 'icon',
   className = '',
 }) => {
-  const { toggleItem, isInWishlist } = useWishlist();
-  const inWishlist = isInWishlist(id);
+  const [inWishlist, setInWishlist] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    const saved = localStorage.getItem('wishlist');
+    const items: WishlistItem[] = saved ? JSON.parse(saved) : [];
+    setInWishlist(items.some((item) => item.id === id));
+  }, [id]);
 
   const handleToggleWishlist = () => {
-    toggleItem({
-      id,
-      slug,
-      name,
-      price,
-      image,
-      addedAt: new Date().toISOString(),
-    });
+    const saved = localStorage.getItem('wishlist');
+    const items: WishlistItem[] = saved ? JSON.parse(saved) : [];
+
+    const existingIndex = items.findIndex((item) => item.id === id);
+    if (existingIndex >= 0) {
+      items.splice(existingIndex, 1);
+      setInWishlist(false);
+    } else {
+      items.push({
+        id,
+        slug,
+        name,
+        price,
+        image,
+        addedAt: new Date().toISOString(),
+      });
+      setInWishlist(true);
+    }
+
+    localStorage.setItem('wishlist', JSON.stringify(items));
   };
 
   if (variant === 'icon') {

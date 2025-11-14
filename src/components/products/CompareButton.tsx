@@ -1,5 +1,18 @@
-import React from 'react';
-import { useCompare } from '@/context/CompareContext';
+import React, { useState, useEffect } from 'react';
+
+interface CompareItem {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  salePrice?: number;
+  image: string;
+  category: string;
+  rating?: number;
+  stock?: number;
+  colors?: string[];
+  sizes?: string[];
+}
 
 interface CompareButtonProps {
   id: string;
@@ -30,25 +43,48 @@ export const CompareButton: React.FC<CompareButtonProps> = ({
   sizes,
   className = '',
 }) => {
-  const { toggleItem, isInCompare, count } = useCompare();
-  const inCompare = isInCompare(id);
+  const [inCompare, setInCompare] = useState(false);
+  const [count, setCount] = useState(0);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    const saved = localStorage.getItem('compare');
+    const items: CompareItem[] = saved ? JSON.parse(saved) : [];
+    setCount(items.length);
+    setInCompare(items.some((item) => item.id === id));
+  }, [id]);
+
   const isFull = count >= 4 && !inCompare;
 
   const handleToggleCompare = () => {
     if (!isFull) {
-      toggleItem({
-        id,
-        slug,
-        name,
-        price,
-        salePrice,
-        image,
-        category,
-        rating,
-        stock,
-        colors,
-        sizes,
-      });
+      const saved = localStorage.getItem('compare');
+      const items: CompareItem[] = saved ? JSON.parse(saved) : [];
+
+      const existingIndex = items.findIndex((item) => item.id === id);
+      if (existingIndex >= 0) {
+        items.splice(existingIndex, 1);
+        setInCompare(false);
+      } else {
+        items.push({
+          id,
+          slug,
+          name,
+          price,
+          salePrice,
+          image,
+          category,
+          rating,
+          stock,
+          colors,
+          sizes,
+        });
+        setInCompare(true);
+      }
+
+      setCount(items.length);
+      localStorage.setItem('compare', JSON.stringify(items));
     }
   };
 
