@@ -1,0 +1,53 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProductGrid from '@/components/products/ProductGrid.astro';
+import products from '@/data/products.json';
+---
+
+<BaseLayout
+  title="Shop"
+  description="Explora nuestra colección de ropa de moda para todos"
+>
+  <!-- Page Header -->
+  <section class="bg-neutral-100 py-12">
+    <div class="container">
+      <h1 class="text-4xl font-bold mb-2">Nuestra Tienda</h1>
+      <p class="text-neutral-600">Explora nuestra colección completa de prendas</p>
+    </div>
+  </section>
+
+  <!-- Shop Section -->
+  <section class="py-16">
+    <div class="container">
+      <!-- Toolbar -->
+      <div class="flex justify-between items-center mb-8">
+        <p class="text-neutral-600">
+          Mostrando {products.length} productos
+        </p>
+        <select class="border border-neutral-300 rounded px-4 py-2">
+          <option>Ordenar por: Más nuevo</option>
+          <option>Ordenar por: Precio menor</option>
+          <option>Ordenar por: Precio mayor</option>
+          <option>Ordenar por: Más popular</option>
+        </select>
+      </div>
+
+      <!-- Product Grid -->
+      <ProductGrid products={products} columns={3} />
+
+      <!-- Pagination -->
+      <div class="mt-12 flex justify-center gap-2">
+        <button class="px-4 py-2 border border-neutral-300 rounded hover:bg-neutral-100">
+          ← Anterior
+        </button>
+        <button class="px-4 py-2 bg-primary-600 text-white rounded">1</button>
+        <button class="px-4 py-2 border border-neutral-300 rounded hover:bg-neutral-100">
+          2
+        </button>
+        <button class="px-4 py-2 border border-neutral-300 rounded hover:bg-neutral-100">
+          Siguiente →
+        </button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

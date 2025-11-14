@@ -1,0 +1,33 @@
+---
+import ProductCard from './ProductCard.astro';
+
+export interface Props {
+  products: any[];
+  columns?: 2 | 3 | 4;
+}
+
+const { products, columns = 3 } = Astro.props;
+
+const columnClasses = {
+  2: 'grid-cols-1 sm:grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+};
+---
+
+<div class={`grid ${columnClasses[columns]} gap-6`}>
+  {
+    products.map((product) => (
+      <ProductCard
+        id={product.id}
+        slug={product.slug}
+        name={product.name}
+        price={product.price}
+        salePrice={product.salePrice}
+        image={product.image}
+        rating={product.rating}
+        reviews={product.reviews}
+      />
+    ))
+  }
+</div>

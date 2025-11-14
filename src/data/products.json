@@ -1,0 +1,225 @@
+[
+  {
+    "id": "1",
+    "slug": "vestido-elegante-negro",
+    "name": "Vestido Elegante Negro",
+    "price": 89.99,
+    "salePrice": 69.99,
+    "category": "vestidos",
+    "image": "/images/products/medium-size/1.jpg",
+    "images": [
+      "/images/products/medium-size/1.jpg",
+      "/images/products/medium-size/2.jpg",
+      "/images/products/large-size/1.jpg"
+    ],
+    "description": "Vestido elegante de noche en color negro con detalles sofisticados. Perfecto para ocasiones especiales.",
+    "stock": 15,
+    "rating": 4.5,
+    "reviews": 12,
+    "colors": ["Negro", "Rojo", "Azul"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "tags": ["elegante", "noche", "mujer"]
+  },
+  {
+    "id": "2",
+    "slug": "blusa-casual-blanca",
+    "name": "Blusa Casual Blanca",
+    "price": 44.99,
+    "category": "blusas",
+    "image": "/images/products/medium-size/2.jpg",
+    "images": [
+      "/images/products/medium-size/2.jpg",
+      "/images/products/medium-size/3.jpg"
+    ],
+    "description": "Blusa casual en algodón puro, ideal para el día a día. Cómoda y versátil.",
+    "stock": 25,
+    "rating": 4.8,
+    "reviews": 28,
+    "colors": ["Blanco", "Crema", "Gris"],
+    "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+    "tags": ["casual", "algodón", "blanca"]
+  },
+  {
+    "id": "3",
+    "slug": "jeans-azul-oscuro",
+    "name": "Jeans Azul Oscuro",
+    "price": 79.99,
+    "category": "pantalones",
+    "image": "/images/products/medium-size/3.jpg",
+    "images": [
+      "/images/products/medium-size/3.jpg",
+      "/images/products/medium-size/4.jpg"
+    ],
+    "description": "Jeans clásico en azul oscuro. Comodidad y estilo en un mismo prenda.",
+    "stock": 30,
+    "rating": 4.6,
+    "reviews": 45,
+    "colors": ["Azul Oscuro", "Azul Claro", "Negro"],
+    "sizes": ["28", "30", "32", "34", "36", "38", "40"],
+    "tags": ["jeans", "casual", "denim"]
+  },
+  {
+    "id": "4",
+    "slug": "chaqueta-cuero-negra",
+    "name": "Chaqueta de Cuero Negra",
+    "price": 199.99,
+    "salePrice": 149.99,
+    "category": "chaquetas",
+    "image": "/images/products/medium-size/4.jpg",
+    "images": [
+      "/images/products/medium-size/4.jpg",
+      "/images/products/large-size/2.jpg"
+    ],
+    "description": "Chaqueta de cuero genuino. Clásica y duradera para uso anual.",
+    "stock": 8,
+    "rating": 4.9,
+    "reviews": 18,
+    "colors": ["Negro", "Marrón"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "tags": ["cuero", "elegante", "chaqueta"]
+  },
+  {
+    "id": "5",
+    "slug": "vestido-verano-floral",
+    "name": "Vestido Verano Floral",
+    "price": 59.99,
+    "category": "vestidos",
+    "image": "/images/products/medium-size/5.jpg",
+    "images": [
+      "/images/products/medium-size/5.jpg"
+    ],
+    "description": "Vestido fresco y colorido con patrón floral. Ideal para días de calor.",
+    "stock": 20,
+    "rating": 4.4,
+    "reviews": 22,
+    "colors": ["Multicolor", "Rosa", "Azul"],
+    "sizes": ["XS", "S", "M", "L"],
+    "tags": ["verano", "floral", "ligero"]
+  },
+  {
+    "id": "6",
+    "slug": "pantalon-trabajo-gris",
+    "name": "Pantalón Trabajo Gris",
+    "price": 64.99,
+    "category": "pantalones",
+    "image": "/images/products/medium-size/6.jpg",
+    "images": [
+      "/images/products/medium-size/6.jpg"
+    ],
+    "description": "Pantalón profesional en gris. Perfecto para la oficina.",
+    "stock": 18,
+    "rating": 4.3,
+    "reviews": 15,
+    "colors": ["Gris", "Negro", "Azul Marino"],
+    "sizes": ["28", "30", "32", "34", "36", "38"],
+    "tags": ["oficina", "profesional", "pantalón"]
+  },
+  {
+    "id": "7",
+    "slug": "blusa-estampada-roja",
+    "name": "Blusa Estampada Roja",
+    "price": 49.99,
+    "category": "blusas",
+    "image": "/images/products/medium-size/7.jpg",
+    "images": [
+      "/images/products/medium-size/7.jpg"
+    ],
+    "description": "Blusa roja con estampado llamativo. Ideal para destacar.",
+    "stock": 22,
+    "rating": 4.5,
+    "reviews": 19,
+    "colors": ["Rojo", "Rosa", "Naranja"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "tags": ["estampado", "rojo", "casual"]
+  },
+  {
+    "id": "8",
+    "slug": "falda-plisada-azul",
+    "name": "Falda Plisada Azul",
+    "price": 54.99,
+    "category": "faldas",
+    "image": "/images/products/medium-size/8.jpg",
+    "images": [
+      "/images/products/medium-size/8.jpg"
+    ],
+    "description": "Falda plisada en azul. Elegante para cualquier ocasión.",
+    "stock": 16,
+    "rating": 4.7,
+    "reviews": 25,
+    "colors": ["Azul", "Negro", "Gris"],
+    "sizes": ["XS", "S", "M", "L"],
+    "tags": ["falda", "plisada", "elegante"]
+  },
+  {
+    "id": "9",
+    "slug": "sueter-lana-beige",
+    "name": "Suéter de Lana Beige",
+    "price": 74.99,
+    "category": "sueteres",
+    "image": "/images/products/medium-size/9.jpg",
+    "images": [
+      "/images/products/medium-size/9.jpg"
+    ],
+    "description": "Suéter cálido en lana pura. Perfecto para invierno.",
+    "stock": 12,
+    "rating": 4.8,
+    "reviews": 31,
+    "colors": ["Beige", "Gris", "Marrón"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "tags": ["lana", "invierno", "cálido"]
+  },
+  {
+    "id": "10",
+    "slug": "bermuda-caqui",
+    "name": "Bermuda Caquí",
+    "price": 44.99,
+    "category": "pantalones",
+    "image": "/images/products/medium-size/10.jpg",
+    "images": [
+      "/images/products/medium-size/10.jpg"
+    ],
+    "description": "Bermuda cómoda en tono caquí. Ideal para clima cálido.",
+    "stock": 24,
+    "rating": 4.4,
+    "reviews": 14,
+    "colors": ["Caquí", "Blanco", "Gris"],
+    "sizes": ["28", "30", "32", "34", "36"],
+    "tags": ["bermuda", "verano", "casual"]
+  },
+  {
+    "id": "11",
+    "slug": "chaqueta-deportiva-azul",
+    "name": "Chaqueta Deportiva Azul",
+    "price": 89.99,
+    "category": "chaquetas",
+    "image": "/images/products/medium-size/11.jpg",
+    "images": [
+      "/images/products/medium-size/11.jpg"
+    ],
+    "description": "Chaqueta deportiva con tecnología transpirable. Para activos.",
+    "stock": 19,
+    "rating": 4.6,
+    "reviews": 20,
+    "colors": ["Azul", "Gris", "Negro"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "tags": ["deporte", "activo", "transpirable"]
+  },
+  {
+    "id": "12",
+    "slug": "top-deportivo-negro",
+    "name": "Top Deportivo Negro",
+    "price": 39.99,
+    "category": "ropa-deportiva",
+    "image": "/images/products/medium-size/12.jpg",
+    "images": [
+      "/images/products/medium-size/12.jpg"
+    ],
+    "description": "Top deportivo de alto rendimiento. Para entrenamientos intensos.",
+    "stock": 28,
+    "rating": 4.7,
+    "reviews": 35,
+    "colors": ["Negro", "Blanco", "Gris"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "tags": ["deporte", "entrenamiento", "performance"]
+  }
+]

@@ -1,0 +1,75 @@
+---
+import Image from '@/components/common/Image.astro';
+import Button from '@/components/common/Button.astro';
+
+export interface Props {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  salePrice?: number;
+  image: string;
+  rating?: number;
+  reviews?: number;
+}
+
+const { id, slug, name, price, salePrice, image, rating = 0, reviews = 0 } = Astro.props;
+
+const discount = salePrice ? Math.round(((price - salePrice) / price) * 100) : 0;
+const displayPrice = salePrice || price;
+---
+
+<div class="group bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300">
+  <!-- Image Container -->
+  <div class="relative overflow-hidden bg-neutral-100 rounded-t-lg aspect-square">
+    <Image
+      src={image}
+      alt={name}
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+    />
+    {discount > 0 && (
+      <div class="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+        -{discount}%
+      </div>
+    )}
+  </div>
+
+  <!-- Content Container -->
+  <div class="p-4">
+    <!-- Name -->
+    <h3 class="text-lg font-semibold text-neutral-900 mb-2 line-clamp-2 h-14">
+      {name}
+    </h3>
+
+    <!-- Rating -->
+    {rating > 0 && (
+      <div class="flex items-center gap-2 mb-3">
+        <div class="flex items-center gap-1">
+          {[...Array(5)].map((_, i) => (
+            <span
+              class={`text-lg ${
+                i < Math.round(rating) ? 'text-yellow-400' : 'text-neutral-300'
+              }`}
+            >
+              ★
+            </span>
+          ))}
+        </div>
+        <span class="text-sm text-neutral-600">({reviews})</span>
+      </div>
+    )}
+
+    <!-- Price -->
+    <div class="flex items-center gap-2 mb-4">
+      <span class="text-2xl font-bold text-primary-600">${displayPrice.toFixed(2)}</span>
+      {salePrice && (
+        <span class="text-lg text-neutral-500 line-through">${price.toFixed(2)}</span>
+      )}
+    </div>
+
+    <!-- Action Button -->
+    <Button href={`/products/${slug}`} variant="primary" size="md" class="w-full text-center">
+      Ver Detalles
+    </Button>
+  </div>
+</div>
