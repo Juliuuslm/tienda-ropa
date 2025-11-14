@@ -90,15 +90,15 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
       {isOpen && (
         <div
           ref={menuRef}
-          className="absolute top-full left-0 right-0 -right-4 bg-white border border-neutral-200 rounded-md shadow-lg md:hidden z-50 min-w-48"
+          className="absolute top-full right-0 bg-white border border-neutral-200 rounded-md shadow-lg md:hidden z-50 w-56"
         >
-          <nav className="py-4">
+          <nav className="py-2">
             <div className="flex flex-col">
               {links.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="px-4 py-2 text-neutral-700 hover:text-primary-600 hover:bg-neutral-50 transition-colors"
+                  className="px-4 py-3 text-sm text-neutral-700 hover:text-primary-600 hover:bg-primary-50 transition-colors whitespace-nowrap"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.label}
