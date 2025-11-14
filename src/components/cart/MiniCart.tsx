@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useCartSync } from '@/hooks/useCart';
 
 interface CartItem {
   id: string;
@@ -12,21 +13,7 @@ interface CartItem {
 }
 
 export const MiniCart: React.FC = () => {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('cart');
-      if (saved) {
-        setItems(JSON.parse(saved));
-      }
-    } catch (error) {
-      console.error('Error loading cart:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const { items, isLoading } = useCartSync();
 
   const count = items.length;
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);

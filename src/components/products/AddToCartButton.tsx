@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { dispatchCartUpdate } from '@/hooks/useCart';
 
 interface Product {
   id: string;
@@ -81,6 +82,7 @@ export const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       const items: CartItem[] = saved ? JSON.parse(saved) : [];
       items.push(cartItem);
       localStorage.setItem('cart', JSON.stringify(items));
+      dispatchCartUpdate(items);
 
       setMessage({
         type: 'success',

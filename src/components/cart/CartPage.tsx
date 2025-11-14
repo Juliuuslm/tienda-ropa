@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useCartSync, dispatchCartUpdate } from '@/hooks/useCart';
 
 interface CartItem {
   id: string;
@@ -12,23 +13,14 @@ interface CartItem {
 }
 
 export const CartPage: React.FC = () => {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { items: initialItems, isLoading } = useCartSync();
+  const [items, setItems] = useState<CartItem[]>(initialItems);
   const [showClearConfirmation, setShowClearConfirmation] = useState(false);
 
-  // Cargar carrito desde localStorage
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('cart');
-      if (saved) {
-        setItems(JSON.parse(saved));
-      }
-    } catch (error) {
-      console.error('Error loading cart:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  // Sincronizar items cuando cambien
+  React.useEffect(() => {
+    setItems(initialItems);
+  }, [initialItems]);
 
   const updateQuantity = (id: string, quantity: number) => {
     const maxQty = 999;
@@ -39,19 +31,20 @@ export const CartPage: React.FC = () => {
     if (quantity > maxQty) quantity = maxQty;
 
     const updatedItems = items.map((item) => (item.id === id ? { ...item, quantity } : item));
-    setItems(updatedItems);
     localStorage.setItem('cart', JSON.stringify(updatedItems));
+    dispatchCartUpdate(updatedItems);
   };
 
   const removeItem = (id: string) => {
     const updatedItems = items.filter((item) => item.id !== id);
-    setItems(updatedItems);
     localStorage.setItem('cart', JSON.stringify(updatedItems));
+    dispatchCartUpdate(updatedItems);
   };
 
   const clearCart = () => {
-    setItems([]);
-    localStorage.setItem('cart', JSON.stringify([]));
+    const emptyCart: CartItem[] = [];
+    localStorage.setItem('cart', JSON.stringify(emptyCart));
+    dispatchCartUpdate(emptyCart);
   };
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
