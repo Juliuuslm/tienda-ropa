@@ -102,14 +102,14 @@ export const CartPage: React.FC = () => {
         {/* Items del carrito */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            {/* Encabezado de tabla */}
-            <div className="hidden md:grid grid-cols-12 gap-4 bg-neutral-50 p-4 font-semibold text-sm">
-              <div className="col-span-1">Imagen</div>
-              <div className="col-span-4">Producto</div>
-              <div className="col-span-2">Cantidad</div>
-              <div className="col-span-2">Precio</div>
-              <div className="col-span-2">Subtotal</div>
-              <div className="col-span-1">Acción</div>
+            {/* Desktop Table Header */}
+            <div className="hidden lg:grid grid-cols-7 gap-4 bg-neutral-50 p-4 font-semibold text-sm border-b border-neutral-200">
+              <div className="">Imagen</div>
+              <div className="col-span-2">Producto</div>
+              <div className="">Cantidad</div>
+              <div className="">Precio</div>
+              <div className="">Subtotal</div>
+              <div className="text-center">Acción</div>
             </div>
 
             {/* Items */}
@@ -117,94 +117,175 @@ export const CartPage: React.FC = () => {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="p-4 grid grid-cols-1 md:grid-cols-12 md:gap-4 md:items-center"
+                  className="p-4"
                 >
-                  {/* Imagen */}
-                  <div className="md:col-span-1 mb-4 md:mb-0">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full md:w-20 h-20 object-cover rounded"
-                    />
-                  </div>
-
-                  {/* Nombre y atributos */}
-                  <div className="md:col-span-4 mb-4 md:mb-0">
-                    <a href={`/products/${item.slug}`} className="font-semibold text-primary-600 hover:underline">
-                      {item.name}
-                    </a>
-                    <div className="text-sm text-neutral-600 mt-1">
-                      {item.color && <div>Color: {item.color}</div>}
-                      {item.size && <div>Talla: {item.size}</div>}
-                    </div>
-                  </div>
-
-                  {/* Cantidad */}
-                  <div className="md:col-span-2 mb-4 md:mb-0">
-                    <label className="block text-sm font-semibold md:hidden mb-2">Cantidad</label>
-                    <div className="flex items-center gap-2 border border-neutral-300 rounded w-fit">
-                      <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="px-3 py-1 hover:bg-neutral-100"
-                        aria-label="Disminuir cantidad"
-                      >
-                        −
-                      </button>
-                      <input
-                        type="number"
-                        value={item.quantity}
-                        onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
-                        className="w-12 text-center border-0 py-1"
-                        min="1"
+                  {/* Desktop View */}
+                  <div className="hidden lg:grid grid-cols-7 gap-4 items-center">
+                    {/* Imagen */}
+                    <div>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-20 h-20 object-cover rounded"
                       />
+                    </div>
+
+                    {/* Nombre y atributos */}
+                    <div className="col-span-2 min-w-0">
+                      <a href={`/products/${item.slug}`} className="font-semibold text-primary-600 hover:underline block truncate">
+                        {item.name}
+                      </a>
+                      <div className="text-xs text-neutral-600 mt-1 space-y-0.5">
+                        {item.color && <div>Color: {item.color}</div>}
+                        {item.size && <div>Talla: {item.size}</div>}
+                      </div>
+                    </div>
+
+                    {/* Cantidad */}
+                    <div>
+                      <div className="flex items-center gap-2 border border-neutral-300 rounded w-fit">
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="px-2 py-1 hover:bg-neutral-100 text-sm"
+                          aria-label="Disminuir cantidad"
+                        >
+                          −
+                        </button>
+                        <input
+                          type="number"
+                          value={item.quantity}
+                          onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
+                          className="w-10 text-center border-0 py-1 text-sm"
+                          min="1"
+                        />
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="px-2 py-1 hover:bg-neutral-100 text-sm"
+                          aria-label="Aumentar cantidad"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Precio unitario */}
+                    <div className="text-sm font-semibold">${item.price.toFixed(2)}</div>
+
+                    {/* Subtotal */}
+                    <div className="text-sm font-bold text-primary-600">${(item.price * item.quantity).toFixed(2)}</div>
+
+                    {/* Botón remover */}
+                    <div className="text-center">
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="px-3 py-1 hover:bg-neutral-100"
-                        aria-label="Aumentar cantidad"
+                        onClick={() => removeItem(item.id)}
+                        className="px-3 py-2 bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition-colors rounded border border-red-200 inline-flex items-center justify-center gap-1.5 text-sm"
+                        title="Remover del carrito"
+                        aria-label={`Remover ${item.name} del carrito`}
                       >
-                        +
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                          <line x1="10" y1="11" x2="10" y2="17"></line>
+                          <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                        Remover
                       </button>
                     </div>
                   </div>
 
-                  {/* Precio unitario */}
-                  <div className="md:col-span-2 mb-4 md:mb-0">
-                    <label className="block text-sm font-semibold md:hidden mb-2">Precio</label>
-                    <div className="font-semibold">${item.price.toFixed(2)}</div>
-                  </div>
+                  {/* Mobile View */}
+                  <div className="lg:hidden">
+                    <div className="flex gap-4 mb-4">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-24 h-24 object-cover rounded flex-shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <a href={`/products/${item.slug}`} className="font-semibold text-primary-600 hover:underline block text-sm">
+                          {item.name}
+                        </a>
+                        <div className="text-xs text-neutral-600 mt-2 space-y-1">
+                          {item.color && <div>Color: {item.color}</div>}
+                          {item.size && <div>Talla: {item.size}</div>}
+                        </div>
+                      </div>
+                    </div>
 
-                  {/* Subtotal */}
-                  <div className="md:col-span-2 mb-4 md:mb-0">
-                    <label className="block text-sm font-semibold md:hidden mb-2">Subtotal</label>
-                    <div className="font-bold text-primary-600">${(item.price * item.quantity).toFixed(2)}</div>
-                  </div>
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <label className="block text-xs font-semibold mb-1 text-neutral-600">Cantidad</label>
+                        <div className="flex items-center gap-2 border border-neutral-300 rounded w-fit">
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="px-2 py-1 hover:bg-neutral-100 text-sm"
+                            aria-label="Disminuir cantidad"
+                          >
+                            −
+                          </button>
+                          <input
+                            type="number"
+                            value={item.quantity}
+                            onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
+                            className="w-10 text-center border-0 py-1 text-sm"
+                            min="1"
+                          />
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="px-2 py-1 hover:bg-neutral-100 text-sm"
+                            aria-label="Aumentar cantidad"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
 
-                  {/* Botón remover */}
-                  <div className="md:col-span-1">
-                    <button
-                      onClick={() => removeItem(item.id)}
-                      className="w-full md:w-auto px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition-colors rounded border border-red-200 flex items-center justify-center gap-2"
-                      title="Remover del carrito"
-                      aria-label={`Remover ${item.name} del carrito`}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                      <div>
+                        <label className="block text-xs font-semibold mb-1 text-neutral-600">Precio</label>
+                        <div className="text-sm font-semibold">${item.price.toFixed(2)}</div>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4 items-center justify-between bg-neutral-50 p-3 rounded mb-4">
+                      <div>
+                        <span className="text-xs text-neutral-600">Subtotal:</span>
+                        <div className="font-bold text-primary-600 text-sm">${(item.price * item.quantity).toFixed(2)}</div>
+                      </div>
+                      <button
+                        onClick={() => removeItem(item.id)}
+                        className="px-3 py-2 bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition-colors rounded border border-red-200 inline-flex items-center gap-1.5 text-sm"
+                        title="Remover del carrito"
+                        aria-label={`Remover ${item.name} del carrito`}
                       >
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                      </svg>
-                      Remover
-                    </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                          <line x1="10" y1="11" x2="10" y2="17"></line>
+                          <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                        Remover
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
