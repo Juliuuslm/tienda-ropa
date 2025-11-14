@@ -103,12 +103,12 @@ export const CartPage: React.FC = () => {
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
             {/* Desktop Table Header */}
-            <div className="hidden lg:grid grid-cols-7 gap-6 bg-neutral-50 px-6 py-4 font-semibold text-sm border-b border-neutral-200">
+            <div className="hidden lg:grid gap-6 bg-neutral-50 px-6 py-4 font-semibold text-sm border-b border-neutral-200" style={{ gridTemplateColumns: '80px 1fr 120px 100px 100px 120px' }}>
               <div className="">Imagen</div>
-              <div className="col-span-2">Producto</div>
-              <div className="">Cantidad</div>
-              <div className="">Precio</div>
-              <div className="">Subtotal</div>
+              <div>Producto</div>
+              <div>Cantidad</div>
+              <div>Precio</div>
+              <div>Subtotal</div>
               <div className="text-center">Acción</div>
             </div>
 
@@ -120,9 +120,9 @@ export const CartPage: React.FC = () => {
                   className="px-6 py-5"
                 >
                   {/* Desktop View */}
-                  <div className="hidden lg:grid grid-cols-7 gap-6 items-center">
+                  <div className="hidden lg:grid gap-6 items-center" style={{ gridTemplateColumns: '80px 1fr 120px 100px 100px 120px' }}>
                     {/* Imagen */}
-                    <div>
+                    <div className="flex justify-center">
                       <img
                         src={item.image}
                         alt={item.name}
@@ -131,7 +131,7 @@ export const CartPage: React.FC = () => {
                     </div>
 
                     {/* Nombre y atributos */}
-                    <div className="col-span-2 min-w-0">
+                    <div className="min-w-0">
                       <a href={`/products/${item.slug}`} className="font-semibold text-primary-600 hover:underline block truncate">
                         {item.name}
                       </a>
@@ -142,7 +142,7 @@ export const CartPage: React.FC = () => {
                     </div>
 
                     {/* Cantidad */}
-                    <div>
+                    <div className="flex justify-center">
                       <div className="flex items-center gap-2 border border-neutral-300 rounded w-fit">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -170,13 +170,13 @@ export const CartPage: React.FC = () => {
                     </div>
 
                     {/* Precio unitario */}
-                    <div className="text-sm font-semibold">${item.price.toFixed(2)}</div>
+                    <div className="text-center text-sm font-semibold">${item.price.toFixed(2)}</div>
 
                     {/* Subtotal */}
-                    <div className="text-sm font-bold text-primary-600">${(item.price * item.quantity).toFixed(2)}</div>
+                    <div className="text-center text-sm font-bold text-primary-600">${(item.price * item.quantity).toFixed(2)}</div>
 
                     {/* Botón remover */}
-                    <div className="text-center">
+                    <div className="flex justify-center">
                       <button
                         onClick={() => removeItem(item.id)}
                         className="px-3 py-2 bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition-colors rounded border border-red-200 inline-flex items-center justify-center gap-1.5 text-sm"
