@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface MenuLink {
   label: string;
@@ -18,11 +18,35 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   ],
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Cerrar menú cuando se haga clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        buttonRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [isOpen]);
 
   return (
-    <>
+    <div className="relative">
       {/* Menu Button */}
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="md:hidden p-2 rounded hover:bg-neutral-100 transition-colors"
         aria-label="Toggle navigation menu"
@@ -64,14 +88,17 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white border-b border-neutral-200 shadow-lg md:hidden z-40">
-          <nav className="container py-4">
-            <div className="flex flex-col gap-2">
+        <div
+          ref={menuRef}
+          className="absolute top-full left-0 right-0 -right-4 bg-white border border-neutral-200 rounded-md shadow-lg md:hidden z-50 min-w-48"
+        >
+          <nav className="py-4">
+            <div className="flex flex-col">
               {links.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="px-4 py-2 text-neutral-700 hover:text-primary-600 hover:bg-neutral-50 rounded transition-colors"
+                  className="px-4 py-2 text-neutral-700 hover:text-primary-600 hover:bg-neutral-50 transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.label}
@@ -81,6 +108,6 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
           </nav>
         </div>
       )}
-    </>
+    </div>
   );
 };
