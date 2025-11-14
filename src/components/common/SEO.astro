@@ -6,6 +6,10 @@ export interface Props {
   url?: string;
   author?: string;
   type?: 'website' | 'article' | 'product';
+  keywords?: string;
+  publishedDate?: string;
+  modifiedDate?: string;
+  schema?: Record<string, any>;
 }
 
 const {
@@ -15,15 +19,35 @@ const {
   url = Astro.url.href,
   author = 'Tienda de Ropa',
   type = 'website',
+  keywords,
+  publishedDate,
+  modifiedDate,
+  schema,
 } = Astro.props;
 
 const siteTitle = `${title} | Tienda de Ropa`;
+
+// Default JSON-LD schema
+const defaultSchema = {
+  '@context': 'https://schema.org',
+  '@type': type === 'product' ? 'Product' : type === 'article' ? 'Article' : 'WebSite',
+  name: title,
+  description: description,
+  url: url,
+  image: image,
+  ...(author && { author: { '@type': 'Organization', name: author } }),
+  ...(publishedDate && { datePublished: publishedDate }),
+  ...(modifiedDate && { dateModified: modifiedDate }),
+};
+
+const jsonLdSchema = schema || defaultSchema;
 ---
 
 <!-- Primary Meta Tags -->
 <title>{siteTitle}</title>
 <meta name="title" content={siteTitle} />
 <meta name="description" content={description} />
+{keywords && <meta name="keywords" content={keywords} />}
 <meta name="author" content={author} />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta charset="UTF-8" />
@@ -34,6 +58,8 @@ const siteTitle = `${title} | Tienda de Ropa`;
 <meta property="og:title" content={siteTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta property="og:site_name" content="Tienda de Ropa" />
 <meta property="og:locale" content="es_ES" />
 
@@ -44,9 +70,16 @@ const siteTitle = `${title} | Tienda de Ropa`;
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={image} />
 
-<!-- Additional -->
+<!-- Additional SEO -->
 <link rel="canonical" href={url} />
 <link rel="icon" href="/images/favicon.ico" />
 <meta name="theme-color" content="#ffffff" />
 <meta name="robots" content="index, follow" />
 <meta name="language" content="Spanish" />
+<meta name="revisit-after" content="7 days" />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLdSchema)} />
+
+<!-- Accessibility -->
+<meta name="color-scheme" content="light" />
