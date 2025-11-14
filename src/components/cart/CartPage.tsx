@@ -14,6 +14,7 @@ interface CartItem {
 export const CartPage: React.FC = () => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showClearConfirmation, setShowClearConfirmation] = useState(false);
 
   // Cargar carrito desde localStorage
   useEffect(() => {
@@ -182,9 +183,26 @@ export const CartPage: React.FC = () => {
                   <div className="md:col-span-1">
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="w-full md:w-auto text-red-600 hover:text-red-700 font-semibold transition-colors"
+                      className="w-full md:w-auto px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 font-semibold transition-colors rounded border border-red-200 flex items-center justify-center gap-2"
                       title="Remover del carrito"
+                      aria-label={`Remover ${item.name} del carrito`}
                     >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                      </svg>
                       Remover
                     </button>
                   </div>
@@ -197,15 +215,47 @@ export const CartPage: React.FC = () => {
           <div className="mt-6 flex gap-4">
             <a
               href="/shop"
-              className="flex-1 border border-primary-600 text-primary-600 py-3 rounded-lg hover:bg-primary-50 transition-colors font-semibold text-center"
+              className="flex-1 border border-primary-600 text-primary-600 py-3 rounded-lg hover:bg-primary-50 transition-colors font-semibold text-center flex items-center justify-center gap-2"
             >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
               Continuar comprando
             </a>
             <button
-              onClick={clearCart}
-              className="flex-1 border border-red-600 text-red-600 py-3 rounded-lg hover:bg-red-50 transition-colors font-semibold"
+              onClick={() => setShowClearConfirmation(true)}
+              className="flex-1 border border-red-600 text-red-600 py-3 rounded-lg hover:bg-red-50 transition-colors font-semibold flex items-center justify-center gap-2"
+              title="Vaciar el carrito completamente"
             >
-              Limpiar carrito
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+              Vaciar carrito
             </button>
           </div>
         </div>
@@ -266,6 +316,35 @@ export const CartPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Clear Cart Confirmation Modal */}
+      {showClearConfirmation && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-lg max-w-sm w-full p-6 animate-fadeIn">
+            <h3 className="text-xl font-bold mb-3 text-neutral-900">Vaciar carrito</h3>
+            <p className="text-neutral-600 mb-6">
+              ¿Estás seguro de que deseas vaciar todo el carrito? Esta acción no se puede deshacer.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowClearConfirmation(false)}
+                className="flex-1 px-4 py-2 border border-neutral-300 text-neutral-700 rounded hover:bg-neutral-50 transition-colors font-semibold"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => {
+                  clearCart();
+                  setShowClearConfirmation(false);
+                }}
+                className="flex-1 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors font-semibold"
+              >
+                Vaciar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
