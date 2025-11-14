@@ -1,0 +1,52 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  url?: string;
+  author?: string;
+  type?: 'website' | 'article' | 'product';
+}
+
+const {
+  title,
+  description,
+  image = '/images/logo/logo.png',
+  url = Astro.url.href,
+  author = 'Tienda de Ropa',
+  type = 'website',
+} = Astro.props;
+
+const siteTitle = `${title} | Tienda de Ropa`;
+---
+
+<!-- Primary Meta Tags -->
+<title>{siteTitle}</title>
+<meta name="title" content={siteTitle} />
+<meta name="description" content={description} />
+<meta name="author" content={author} />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={url} />
+<meta property="og:title" content={siteTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:site_name" content="Tienda de Ropa" />
+<meta property="og:locale" content="es_ES" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={url} />
+<meta property="twitter:title" content={siteTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={image} />
+
+<!-- Additional -->
+<link rel="canonical" href={url} />
+<link rel="icon" href="/images/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+<meta name="robots" content="index, follow" />
+<meta name="language" content="Spanish" />

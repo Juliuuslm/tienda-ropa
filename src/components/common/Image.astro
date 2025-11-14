@@ -1,0 +1,45 @@
+---
+export interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  lazy?: boolean;
+  class?: string;
+  title?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  lazy = true,
+  class: customClass = '',
+  title,
+} = Astro.props;
+
+// Determine if image has extension to add webp/avif versions
+const basePath = src.replace(/\.(jpg|jpeg|png)$/i, '');
+const hasExtension = /\.(jpg|jpeg|png|webp|avif)$/i.test(src);
+---
+
+<picture class={`inline-block ${customClass}`}>
+  {
+    hasExtension && (
+      <>
+        <source srcSet={`${basePath}.avif`} type="image/avif" />
+        <source srcSet={`${basePath}.webp`} type="image/webp" />
+      </>
+    )
+  }
+  <img
+    src={src}
+    alt={alt}
+    title={title}
+    width={width}
+    height={height}
+    loading={lazy ? 'lazy' : 'eager'}
+    class="max-w-full h-auto"
+  />
+</picture>
