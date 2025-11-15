@@ -23,6 +23,7 @@ build/
 
 # OS
 Thumbs.db
+*:Zone.Identifier
 
 # Logs
 npm-debug.log*
