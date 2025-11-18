@@ -1,0 +1,94 @@
+---
+/**
+ * MegaMenu - Menú desplegable grande con categorías
+ */
+
+const categories = [
+  {
+    title: 'Nuevas Colecciones',
+    links: [
+      { name: 'Colección Otoño', href: '/shop?collection=autumn' },
+      { name: 'Colección Invierno', href: '/shop?collection=winter' },
+      { name: 'Tendencias 2024', href: '/shop?trending=true' },
+      { name: 'Descuentos', href: '/shop?discount=true' },
+    ],
+  },
+  {
+    title: 'Mujeres',
+    links: [
+      { name: 'Vestidos', href: '/shop?category=vestidos' },
+      { name: 'Tops & Camisetas', href: '/shop?category=tops' },
+      { name: 'Pantalones', href: '/shop?category=pantalones' },
+      { name: 'Faldas', href: '/shop?category=faldas' },
+      { name: 'Chaquetas', href: '/shop?category=chaquetas' },
+    ],
+  },
+  {
+    title: 'Hombres',
+    links: [
+      { name: 'Camisetas', href: '/shop?category=camisetas-hombres' },
+      { name: 'Pantalones', href: '/shop?category=pantalones-hombres' },
+      { name: 'Chaquetas', href: '/shop?category=chaquetas-hombres' },
+      { name: 'Camisas', href: '/shop?category=camisas' },
+    ],
+  },
+  {
+    title: 'Accesorios',
+    links: [
+      { name: 'Bolsos', href: '/shop?category=bolsos' },
+      { name: 'Zapatos', href: '/shop?category=zapatos' },
+      { name: 'Joyería', href: '/shop?category=joyeria' },
+      { name: 'Cinturones', href: '/shop?category=cinturones' },
+    ],
+  },
+];
+---
+
+<nav
+  class="hidden group-hover:block absolute top-full left-0 right-0 bg-white shadow-2xl border-t border-neutral-200 z-40"
+  id="mega-menu"
+>
+  <div class="container">
+    <div class="grid grid-cols-4 gap-8 py-10">
+      {
+        categories.map((category) => (
+          <div>
+            <h3 class="text-sm font-bold text-neutral-900 mb-4 uppercase tracking-wider">
+              {category.title}
+            </h3>
+            <ul class="space-y-3">
+              {category.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-neutral-600 text-sm hover:text-primary-600 transition-colors duration-200 flex items-center gap-2 group"
+                  >
+                    <span class="inline-block w-1 h-1 bg-primary-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</nav>
+
+<style>
+  #mega-menu {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
