@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { AddToCartButton } from './AddToCartButton';
 import { WishlistButton } from './WishlistButton';
 import { CompareButton } from './CompareButton';
+import { ProductGallery } from './ProductGallery';
+import { RelatedProducts } from './RelatedProducts';
+import products from '@/data/products.json';
 
 interface Product {
   id: string;
@@ -29,13 +32,46 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const [selectedColor, setSelectedColor] = useState<string | null>(product.colors?.[0] || null);
   const [selectedSize, setSelectedSize] = useState<string | null>(product.sizes?.[0] || null);
   const [quantity, setQuantity] = useState(1);
-  const [mainImage, setMainImage] = useState(product.image);
   const [activeTab, setActiveTab] = useState<'description' | 'additional' | 'reviews'>('description');
 
   const displayPrice = product.salePrice || product.price;
   const discount = product.salePrice
     ? Math.round(((product.price - product.salePrice) / product.price) * 100)
     : 0;
+
+  // Get gallery images
+  const galleryImages = useMemo(() => {
+    if (product.images && product.images.length > 0) {
+      return [product.image, ...product.images];
+    }
+    return [product.image];
+  }, [product.image, product.images]);
+
+  // Get related products (same category)
+  const relatedProducts = useMemo(() => {
+    return (products as any[])
+      .filter(
+        (p) =>
+          p.category === product.category &&
+          p.id !== product.id &&
+          p.id !== product.id
+      )
+      .slice(0, 6)
+      .map((p) => ({
+        id: p.id,
+        slug: p.slug,
+        name: p.name,
+        price: p.price,
+        salePrice: p.salePrice,
+        image: p.image,
+        rating: p.rating,
+        reviews: p.reviews,
+        stock: p.stock,
+        category: p.category,
+        colors: p.colors,
+        sizes: p.sizes,
+      }));
+  }, [product.category, product.id]);
 
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
@@ -52,54 +88,12 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     }
   };
 
-  const handleImageChange = (image: string) => {
-    setMainImage(image);
-  };
-
   return (
     <div className="py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-        {/* Galería de imágenes */}
+        {/* Product Gallery */}
         <div>
-          {/* Imagen principal */}
-          <div className="relative bg-neutral-100 rounded-lg overflow-hidden aspect-square mb-4">
-            <img
-              src={mainImage}
-              alt={product.name}
-              className="w-full h-full object-cover"
-              loading="eager"
-            />
-            {discount > 0 && (
-              <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                -{discount}%
-              </div>
-            )}
-          </div>
-
-          {/* Miniaturas */}
-          {product.images && product.images.length > 1 && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <button
-                onClick={() => handleImageChange(product.image)}
-                className={`relative rounded overflow-hidden cursor-pointer transition-all ${
-                  mainImage === product.image ? 'ring-2 ring-primary-600' : 'opacity-60 hover:opacity-100'
-                }`}
-              >
-                <img src={product.image} alt="Miniatura 1" className="w-full h-full object-cover" />
-              </button>
-              {product.images.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleImageChange(img)}
-                  className={`relative rounded overflow-hidden cursor-pointer transition-all ${
-                    mainImage === img ? 'ring-2 ring-primary-600' : 'opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <img src={img} alt={`Miniatura ${idx + 2}`} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
+          <ProductGallery images={galleryImages} productName={product.name} />
         </div>
 
         {/* Información del producto */}
@@ -369,6 +363,16 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           )}
         </div>
       </div>
+
+      {/* Related Products Section */}
+      {relatedProducts.length > 0 && (
+        <RelatedProducts
+          products={relatedProducts}
+          currentProductId={product.id}
+          title="Productos Relacionados"
+          description="Otros artículos de la misma categoría que podrían interesarte"
+        />
+      )}
     </div>
   );
 };
