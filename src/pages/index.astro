@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import FeaturedDeals from '@/components/products/FeaturedDeals.astro';
-import Testimonials from '@/components/common/Testimonials.astro';
 import { Newsletter } from '@/components/common/Newsletter';
 import { HeroSlider } from '@/components/home/HeroSlider';
+import { CategoriesShowcase } from '@/components/home/CategoriesShowcase';
+import { Features } from '@/components/home/Features';
+import { TestimonialsCarousel } from '@/components/home/TestimonialsCarousel';
 ---
 
 <BaseLayout
@@ -13,11 +15,17 @@ import { HeroSlider } from '@/components/home/HeroSlider';
   <!-- Hero Slider Section -->
   <HeroSlider client:load />
 
+  <!-- Features Section -->
+  <Features client:load />
+
+  <!-- Categories Showcase -->
+  <CategoriesShowcase client:load />
+
   <!-- Featured Deals -->
   <FeaturedDeals />
 
-  <!-- Testimonials -->
-  <Testimonials />
+  <!-- Testimonials Carousel -->
+  <TestimonialsCarousel client:load />
 
   <!-- Newsletter -->
   <Newsletter client:idle />
