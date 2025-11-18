@@ -51,7 +51,7 @@ const { title, description, image, type = 'website' } = Astro.props;
       <TopBar client:load />
 
       {/* Main Header */}
-      <header class="sticky top-0 z-40 bg-white border-b border-neutral-200 relative" id="main-header">
+      <header class="sticky top-0 z-40 bg-white border-b border-neutral-200 relative" id="main-header" style="z-index: 40;">
         <div class="container py-4">
           <div class="flex items-center justify-between gap-4">
             {/* Logo */}
