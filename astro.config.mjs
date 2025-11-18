@@ -21,6 +21,9 @@ export default defineConfig({
         output: {
           manualChunks: {
             'react-vendor': ['react', 'react-dom'],
+            'swiper-vendor': ['swiper'],
+            'icons-vendor': ['lucide-react'],
+            'animations-vendor': ['aos'],
           },
         },
       },

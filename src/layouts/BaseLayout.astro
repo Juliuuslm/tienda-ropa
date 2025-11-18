@@ -25,12 +25,25 @@ const { title, description, image, type = 'website' } = Astro.props;
 <html lang="es">
   <head>
     <SEO {title} {description} {image} type={type} />
+
+    <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800;900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Preload Critical Resources -->
+    <link rel="preload" as="image" href="/_astro/HeroSlider.b6588319.js" />
+    <link rel="preload" as="script" href="/_astro/react-vendor.*.js" />
+
+    <!-- DNS Prefetch for External Services -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- Optimizations -->
+    <meta name="theme-color" content="#ff5252" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body class="bg-white text-neutral-900">
     <AppProviders>
