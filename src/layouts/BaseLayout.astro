@@ -4,6 +4,12 @@ import AppProviders from '@/components/layout/AppProviders.astro';
 import { NavLinks } from '@/components/layout/NavLinks';
 import { MiniCart } from '@/components/cart/MiniCart';
 import { MobileMenu } from '@/components/layout/MobileMenu';
+import { AOSInitializer } from '@/components/AOSInitializer';
+import { TopBar } from '@/components/layout/TopBar';
+import { SearchBar } from '@/components/layout/SearchBar';
+import MegaMenu from '@/components/layout/MegaMenu.astro';
+import { Footer } from '@/components/layout/Footer';
+import { StickyHeaderScript } from '@/components/layout/StickyHeaderScript';
 import '@/styles/global.css';
 
 export interface Props {
@@ -20,77 +26,109 @@ const { title, description, image, type = 'website' } = Astro.props;
 <html lang="es">
   <head>
     <SEO {title} {description} {image} type={type} />
+
+    <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800;900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Preload Critical Resources -->
+    <link rel="preload" as="image" href="/_astro/HeroSlider.b6588319.js" />
+    <link rel="preload" as="script" href="/_astro/react-vendor.*.js" />
+
+    <!-- DNS Prefetch for External Services -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- Optimizations -->
+    <meta name="theme-color" content="#ff5252" />
+    <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body class="bg-white text-neutral-900">
     <AppProviders>
-      <header class="sticky top-0 z-40 bg-white border-b border-neutral-200 relative">
+      {/* Top Bar */}
+      <TopBar client:load />
+
+      {/* Main Header */}
+      <header class="sticky top-0 z-50 bg-white border-b border-neutral-200 relative" id="main-header">
         <div class="container py-4">
-          <div class="flex items-center justify-between">
-            <a href="/" class="text-2xl font-bold text-primary-600">
-              Tienda de Ropa
+          <div class="flex items-center justify-between gap-4">
+            {/* Logo */}
+            <a href="/" class="text-2xl font-bold text-primary-600 flex-shrink-0 hover:text-primary-700 transition-colors">
+              Nova
             </a>
-            <nav class="hidden md:flex gap-6 items-center">
-              <a href="/shop" class="hover:text-primary-600">Shop</a>
-              <a href="/blog" class="hover:text-primary-600">Blog</a>
-              <a href="/about" class="hover:text-primary-600">About</a>
-              <a href="/contact" class="hover:text-primary-600">Contact</a>
-              <div class="border-l border-neutral-200 pl-6 flex gap-4">
+
+            {/* Search Bar - Desktop */}
+            <div class="hidden lg:block">
+              <SearchBar client:load />
+            </div>
+
+            {/* Right Section */}
+            <nav class="hidden md:flex gap-4 items-center flex-shrink-0">
+              <div class="flex items-center gap-4 border-l border-neutral-200 pl-4">
                 <MiniCart client:load />
                 <NavLinks client:visible />
               </div>
             </nav>
-            <div class="md:hidden flex items-center gap-3">
+
+            {/* Mobile Menu */}
+            <div class="md:hidden flex items-center gap-2">
               <MiniCart client:load />
               <MobileMenu client:load />
             </div>
           </div>
+
+          {/* Search Bar - Mobile */}
+          <div class="lg:hidden mt-4">
+            <SearchBar client:load />
+          </div>
+
+          {/* Navigation Links - Desktop */}
+          <nav class="hidden lg:flex gap-8 mt-4 border-t border-neutral-200 pt-4">
+            <div class="relative group">
+              <a href="/shop" class="font-medium text-neutral-700 hover:text-primary-600 py-2 transition-colors group-hover:text-primary-600">
+                Shop
+              </a>
+              <MegaMenu />
+            </div>
+            <a href="/blog" class="font-medium text-neutral-700 hover:text-primary-600 py-2 transition-colors">Blog</a>
+            <a href="/about" class="font-medium text-neutral-700 hover:text-primary-600 py-2 transition-colors">About</a>
+            <a href="/contact" class="font-medium text-neutral-700 hover:text-primary-600 py-2 transition-colors">Contact</a>
+          </nav>
         </div>
       </header>
+
+      {/* Sticky Header Script */}
+      <StickyHeaderScript client:load />
+
+      <script>
+        // Calcular y actualizar la altura del header dinámicamente para el MegaMenu
+        function updateHeaderHeight() {
+          const header = document.getElementById('main-header');
+          if (header) {
+            const height = header.offsetHeight;
+            document.documentElement.style.setProperty('--header-height', `${height}px`);
+          }
+        }
+
+        // Actualizar al cargar la página
+        updateHeaderHeight();
+
+        // Actualizar al redimensionar la ventana
+        window.addEventListener('resize', updateHeaderHeight);
+
+        // Actualizar después de que el contenido se cargue completamente
+        window.addEventListener('load', updateHeaderHeight);
+      </script>
 
       <main>
         <slot />
       </main>
 
-      <footer class="bg-neutral-900 text-white py-12">
-        <div class="container">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 class="font-bold mb-4">Tienda de Ropa</h3>
-              <p class="text-neutral-400">Tu tienda de moda online</p>
-            </div>
-            <div>
-              <h4 class="font-semibold mb-4">Shop</h4>
-              <ul class="space-y-2 text-neutral-400">
-                <li><a href="/shop" class="hover:text-white">Productos</a></li>
-                <li><a href="/shop" class="hover:text-white">Categorías</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="font-semibold mb-4">Compañía</h4>
-              <ul class="space-y-2 text-neutral-400">
-                <li><a href="/about" class="hover:text-white">About</a></li>
-                <li><a href="/contact" class="hover:text-white">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="font-semibold mb-4">Legal</h4>
-              <ul class="space-y-2 text-neutral-400">
-                <li><a href="/" class="hover:text-white">Privacy</a></li>
-                <li><a href="/" class="hover:text-white">Terms</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="border-t border-neutral-700 pt-8 text-center text-neutral-400">
-            <p>&copy; 2024 Tienda de Ropa. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer client:load />
+      <AOSInitializer client:load />
     </AppProviders>
   </body>
 </html>

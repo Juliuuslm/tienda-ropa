@@ -2,6 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { ProductCard } from '@/components/products/ProductCard';
 import { ShopFiltersAndSort, type SortOption } from './ShopFiltersAndSort';
 import { Pagination } from './Pagination';
+import { SidebarFilters } from './SidebarFilters';
+import { ShopControls } from './ShopControls';
+import { ProductCardGridSkeleton } from '@/components/common/Skeleton';
 
 interface Product {
   id: string;
@@ -28,6 +31,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({ products, itemsPerPage = 12 
   const [sortBy, setSortBy] = useState<SortOption>('newest');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [isLoading, setIsLoading] = useState(false);
 
   // Extract unique categories from products
   const categories = useMemo(() => {
@@ -97,76 +102,109 @@ export const ShopPage: React.FC<ShopPageProps> = ({ products, itemsPerPage = 12 
     setCurrentPage(1);
   }, [sortBy, searchQuery, selectedCategory]);
 
+  const handleSortChange = (sort: string) => {
+    setIsLoading(true);
+    setSortBy(sort as SortOption);
+    setTimeout(() => setIsLoading(false), 300);
+  };
+
+  const handleViewModeChange = (mode: 'grid' | 'list') => {
+    setViewMode(mode);
+  };
+
   return (
     <div>
-      {/* Filters and Sort */}
-      <ShopFiltersAndSort
-        totalProducts={filteredAndSortedProducts.length}
-        onSortChange={setSortBy}
-        onSearchChange={setSearchQuery}
-        currentSort={sortBy}
-        categories={categories}
-        onCategoryChange={setSelectedCategory}
-        selectedCategory={selectedCategory}
+      {/* Shop Controls */}
+      <ShopControls
+        viewMode={viewMode}
+        onViewModeChange={handleViewModeChange}
+        onSortChange={handleSortChange}
+        productCount={filteredAndSortedProducts.length}
       />
 
-      {/* Product Grid */}
-      {paginatedProducts.length > 0 ? (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {paginatedProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                slug={product.slug}
-                name={product.name}
-                price={product.price}
-                salePrice={product.salePrice}
-                image={product.image}
-                rating={product.rating}
-                reviews={product.reviews}
-                stock={product.stock}
-                category={product.category}
-                colors={product.colors}
-                sizes={product.sizes}
-              />
-            ))}
-          </div>
-
-          {/* Pagination */}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            itemsPerPage={itemsPerPage}
-            totalItems={filteredAndSortedProducts.length}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Sidebar Filters - Desktop Only */}
+        <div className="hidden lg:block">
+          <SidebarFilters
+            onFilterChange={(filters) => {
+              if (filters.categories) {
+                setSelectedCategory(
+                  filters.categories[0] || null
+                );
+              }
+            }}
           />
-        </>
-      ) : (
-        <div className="text-center py-16">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="64"
-            height="64"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mx-auto mb-4 text-neutral-400"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-          </svg>
-          <h3 className="text-xl font-semibold text-neutral-900 mb-2">
-            No hay productos
-          </h3>
-          <p className="text-neutral-600">
-            Intenta ajustar tus filtros o búsqueda
-          </p>
         </div>
-      )}
+
+        {/* Main Content */}
+        <div className="lg:col-span-3">
+          {/* Product Grid/List */}
+          {isLoading ? (
+            <ProductCardGridSkeleton count={itemsPerPage} />
+          ) : paginatedProducts.length > 0 ? (
+            <>
+              <div className={
+                viewMode === 'grid'
+                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+                  : 'space-y-4'
+              }>
+                {paginatedProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    slug={product.slug}
+                    name={product.name}
+                    price={product.price}
+                    salePrice={product.salePrice}
+                    image={product.image}
+                    rating={product.rating}
+                    reviews={product.reviews}
+                    stock={product.stock}
+                    category={product.category}
+                    colors={product.colors}
+                    sizes={product.sizes}
+                  />
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                  itemsPerPage={itemsPerPage}
+                  totalItems={filteredAndSortedProducts.length}
+                />
+              )}
+            </>
+          ) : (
+            <div className="text-center py-16 bg-neutral-50 rounded-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="64"
+                height="64"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mx-auto mb-4 text-neutral-400"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              <h3 className="text-xl font-semibold text-neutral-900 mb-2">
+                No hay productos
+              </h3>
+              <p className="text-neutral-600">
+                Intenta ajustar tus filtros o búsqueda
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
