@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/common/Button.astro';
+import { ContactInfo } from '@/components/contact/ContactInfo';
 ---
 
 <BaseLayout
@@ -20,31 +21,24 @@ import Button from '@/components/common/Button.astro';
     <div class="container">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
         <!-- Contact Info -->
-        {
-          [
-            {
-              icon: '📍',
-              title: 'Dirección',
-              content: 'Calle Principal 123, Madrid, España',
-            },
-            {
-              icon: '📧',
-              title: 'Email',
-              content: 'info@tiendaderopa.com',
-            },
-            {
-              icon: '📱',
-              title: 'Teléfono',
-              content: '+34 123 456 789',
-            },
-          ].map((item) => (
-            <div class="text-center">
-              <div class="text-4xl mb-4">{item.icon}</div>
-              <h3 class="text-xl font-bold mb-2">{item.title}</h3>
-              <p class="text-neutral-600">{item.content}</p>
-            </div>
-          ))
-        }
+        <ContactInfo
+          client:load
+          icon="MapPin"
+          title="Dirección"
+          content="Calle Principal 123, Madrid, España"
+        />
+        <ContactInfo
+          client:load
+          icon="Mail"
+          title="Email"
+          content="info@tiendaderopa.com"
+        />
+        <ContactInfo
+          client:load
+          icon="Phone"
+          title="Teléfono"
+          content="+34 123 456 789"
+        />
       </div>
 
       <!-- Contact Form -->

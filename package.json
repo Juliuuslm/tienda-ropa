@@ -13,18 +13,21 @@
     "lint": "eslint src --ext .ts,.tsx,.astro"
   },
   "dependencies": {
-    "astro": "^3.6.5",
     "@astrojs/react": "^3.0.9",
-    "@astrojs/tailwind": "^5.1.0",
     "@astrojs/sitemap": "^3.0.4",
+    "@astrojs/tailwind": "^5.1.0",
+    "aos": "^2.3.4",
+    "astro": "^3.6.5",
+    "lucide-react": "^0.554.0",
+    "photoswipe": "^5.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwindcss": "^3.4.1",
+    "react-hook-form": "^7.49.3",
     "swiper": "^11.0.5",
-    "photoswipe": "^5.4.3",
-    "react-hook-form": "^7.49.3"
+    "tailwindcss": "^3.4.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.3.4",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/parser": "^6.19.0",
@@ -32,7 +35,6 @@
     "eslint-plugin-astro": "^0.31.0",
     "prettier": "^3.2.4",
     "prettier-plugin-astro": "^0.13.0",
-    "typescript": "^5.3.3",
-    "@astrojs/check": "^0.3.4"
+    "typescript": "^5.3.3"
   }
 }

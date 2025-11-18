@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Image from '@/components/common/Image.astro';
 import Button from '@/components/common/Button.astro';
+import { ValueCard } from '@/components/about/ValueCard';
 ---
 
 <BaseLayout
@@ -41,31 +42,24 @@ import Button from '@/components/common/Button.astro';
 
       <!-- Values -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {
-          [
-            {
-              icon: '✓',
-              title: 'Calidad',
-              description: 'Productos de la mejor calidad a precios competitivos',
-            },
-            {
-              icon: '🚚',
-              title: 'Envío Rápido',
-              description: 'Entrega rápida y segura a toda España',
-            },
-            {
-              icon: '💚',
-              title: 'Satisfacción',
-              description: 'Garantía de satisfacción o dinero devuelto',
-            },
-          ].map((value) => (
-            <div class="bg-neutral-50 rounded-lg p-8 text-center">
-              <div class="text-4xl mb-4">{value.icon}</div>
-              <h3 class="text-xl font-bold mb-2">{value.title}</h3>
-              <p class="text-neutral-600">{value.description}</p>
-            </div>
-          ))
-        }
+        <ValueCard
+          client:load
+          icon="Star"
+          title="Calidad Premium"
+          description="Productos de la mejor calidad seleccionados cuidadosamente para nuestros clientes"
+        />
+        <ValueCard
+          client:load
+          icon="Truck"
+          title="Envío Rápido"
+          description="Entrega rápida y segura a toda España con opciones de seguimiento"
+        />
+        <ValueCard
+          client:load
+          icon="CheckCircle"
+          title="Satisfacción Garantizada"
+          description="Garantía de satisfacción o dinero devuelto, sin preguntas"
+        />
       </div>
     </div>
   </section>
