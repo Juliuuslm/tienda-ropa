@@ -3,31 +3,15 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import FeaturedDeals from '@/components/products/FeaturedDeals.astro';
 import Testimonials from '@/components/common/Testimonials.astro';
 import { Newsletter } from '@/components/common/Newsletter';
+import { HeroSlider } from '@/components/home/HeroSlider';
 ---
 
 <BaseLayout
   title="Inicio"
   description="Bienvenido a nuestra tienda de ropa con las mejores prendas"
 >
-  <!-- Hero Section -->
-  <section class="py-20 bg-gradient-to-r from-primary-50 to-secondary-50">
-    <div class="container">
-      <div class="text-center">
-        <h1 class="text-5xl md:text-6xl font-bold mb-4 animate-fade">
-          Tienda de Ropa
-        </h1>
-        <p class="text-xl md:text-2xl text-neutral-600 mb-8">
-          Descubre las mejores prendas de moda
-        </p>
-        <a
-          href="/shop"
-          class="inline-block bg-primary-600 text-white px-8 py-3 rounded font-semibold hover:bg-primary-700 transition"
-        >
-          Explora la tienda
-        </a>
-      </div>
-    </div>
-  </section>
+  <!-- Hero Slider Section -->
+  <HeroSlider client:load />
 
   <!-- Featured Deals -->
   <FeaturedDeals />
