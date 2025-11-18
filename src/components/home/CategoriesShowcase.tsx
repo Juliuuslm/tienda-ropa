@@ -18,7 +18,7 @@ const defaultCategories: Category[] = [
     id: '1',
     name: 'Vestidos',
     href: '/shop?category=vestidos',
-    icon: 'Dress',
+    icon: 'Sparkles',
     image: 'linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%)',
   },
   {
@@ -39,7 +39,7 @@ const defaultCategories: Category[] = [
     id: '4',
     name: 'Chaquetas',
     href: '/shop?category=chaquetas',
-    icon: 'Jacket',
+    icon: 'Wind',
     image: 'linear-gradient(135deg, #ff006e 0%, #d70055 100%)',
   },
   {

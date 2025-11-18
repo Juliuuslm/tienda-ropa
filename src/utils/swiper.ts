@@ -1,10 +1,8 @@
-import { SwiperOptions } from 'swiper/types';
-
 /**
  * Configuraciones predefinidas para diferentes tipos de Swiper
  */
 
-export const heroSliderConfig: SwiperOptions = {
+export const heroSliderConfig = {
   loop: true,
   autoplay: {
     delay: 5000,
@@ -21,7 +19,7 @@ export const heroSliderConfig: SwiperOptions = {
   speed: 1000,
 };
 
-export const productCarouselConfig: SwiperOptions = {
+export const productCarouselConfig = {
   slidesPerView: 4,
   spaceBetween: 20,
   pagination: {
@@ -48,7 +46,7 @@ export const productCarouselConfig: SwiperOptions = {
   },
 };
 
-export const testimonialCarouselConfig: SwiperOptions = {
+export const testimonialCarouselConfig = {
   slidesPerView: 3,
   spaceBetween: 30,
   autoplay: {
@@ -75,7 +73,7 @@ export const testimonialCarouselConfig: SwiperOptions = {
   },
 };
 
-export const logoCarouselConfig: SwiperOptions = {
+export const logoCarouselConfig = {
   slidesPerView: 5,
   spaceBetween: 20,
   autoplay: {
@@ -102,7 +100,7 @@ export const logoCarouselConfig: SwiperOptions = {
   },
 };
 
-export const relatedProductsConfig: SwiperOptions = {
+export const relatedProductsConfig = {
   slidesPerView: 4,
   spaceBetween: 20,
   navigation: true,
