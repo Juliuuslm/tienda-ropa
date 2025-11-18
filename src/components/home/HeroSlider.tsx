@@ -51,7 +51,7 @@ const defaultSlides: HeroSlide[] = [
 
 export const HeroSlider: React.FC<HeroSliderProps> = ({ slides = defaultSlides }) => {
   return (
-    <section className="relative w-full h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
+    <section className="relative w-full h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden" style={{ zIndex: 1 }}>
       <Swiper
         {...heroSliderConfig}
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
