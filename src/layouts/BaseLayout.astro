@@ -9,6 +9,7 @@ import { TopBar } from '@/components/layout/TopBar';
 import { SearchBar } from '@/components/layout/SearchBar';
 import MegaMenu from '@/components/layout/MegaMenu.astro';
 import { Footer } from '@/components/layout/Footer';
+import { StickyHeaderScript } from '@/components/layout/StickyHeaderScript';
 import '@/styles/global.css';
 
 export interface Props {
@@ -98,6 +99,9 @@ const { title, description, image, type = 'website' } = Astro.props;
           </nav>
         </div>
       </header>
+
+      {/* Sticky Header Script */}
+      <StickyHeaderScript client:load />
 
       <script>
         // Calcular y actualizar la altura del header dinámicamente para el MegaMenu
