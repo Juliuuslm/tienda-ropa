@@ -6,6 +6,8 @@ import { HeroSlider } from '@/components/home/HeroSlider';
 import { CategoriesShowcase } from '@/components/home/CategoriesShowcase';
 import { Features } from '@/components/home/Features';
 import { TestimonialsCarousel } from '@/components/home/TestimonialsCarousel';
+import { LookbookGallery } from '@/components/home/LookbookGallery';
+import { BrandLogos } from '@/components/home/BrandLogos';
 ---
 
 <BaseLayout
@@ -23,6 +25,12 @@ import { TestimonialsCarousel } from '@/components/home/TestimonialsCarousel';
 
   <!-- Featured Deals -->
   <FeaturedDeals />
+
+  <!-- Lookbook Gallery -->
+  <LookbookGallery client:load />
+
+  <!-- Brand Logos -->
+  <BrandLogos client:load />
 
   <!-- Testimonials Carousel -->
   <TestimonialsCarousel client:load />
